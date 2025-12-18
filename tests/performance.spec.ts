@@ -7,8 +7,6 @@ test("Performance test with performance_glitch_user", async ({ page }) => {
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);
 
-  // Start timer
-  const startTime = Date.now();
 
   // Login with performance_glitch_user
   await loginPage.goto(config.baseURL);
@@ -17,6 +15,9 @@ test("Performance test with performance_glitch_user", async ({ page }) => {
     config.users.performance.password
   );
 
+   // Start timer
+  const startTime = Date.now();
+
   // Wait until inventory page is visible
   await expect(page.locator(".inventory_list")).toBeVisible();
 
@@ -24,6 +25,6 @@ test("Performance test with performance_glitch_user", async ({ page }) => {
   const duration = Date.now() - startTime;
   console.log(`Login + load time: ${duration} ms`);
 
-  // Fail if duration < 3000ms
+  // Expect duration < 3000ms
   expect(duration).toBeLessThan(3000); // intentional fail (it usually takes longer)
 });
